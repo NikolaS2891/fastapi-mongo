@@ -1,7 +1,8 @@
 from enum import Enum
-from bson import ObjectId
-from pydantic import BaseModel, Field, EmailStr
 from typing import Optional
+
+from bson import ObjectId
+from pydantic import BaseModel, EmailStr, Field
 
 
 class PyObjectId(ObjectId):
@@ -32,7 +33,7 @@ class UserModel(BaseModel):
     first_name: str
     last_name: str
     role: UserRole
-    is_active : str
+    is_active: str
     created_at: Optional[str] = None
     last_login: str
     password: str
