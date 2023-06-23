@@ -1,11 +1,11 @@
-from fastapi import Depends, HTTPException, status
-from jose import JWTError, jwt
-from .config.settings import pwd_context, oauth2_scheme, SECRET_KEY, ALGORITHM
-from .config.database import db
-
 from datetime import datetime, timedelta
 from typing import Optional
 
+from fastapi import Depends, HTTPException, status
+from jose import JWTError, jwt
+
+from .config.database import db
+from .config.settings import ALGORITHM, SECRET_KEY, oauth2_scheme, pwd_context
 
 
 def get_password_hash(password: str) -> str:
