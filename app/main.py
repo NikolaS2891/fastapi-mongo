@@ -24,7 +24,10 @@ async def authenticate(request: Request, call_next):
                 username, _, password = decoded.partition(":")
                 request.state.user = await authenticate_user(username, password)
         except (ValueError, UnicodeDecodeError, binascii.Error):
-            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid basic auth credentials")
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Invalid basic auth credentials",
+            )
 
     response = await call_next(request)
     return response

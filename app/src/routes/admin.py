@@ -12,7 +12,11 @@ from ..dependecies import get_current_user, get_password_hash
 router = APIRouter()
 
 
-@router.get("/list_users", response_description="List all users", response_model=List[ShowUserModel])
+@router.get(
+    "/list_users",
+    response_description="List all users",
+    response_model=List[ShowUserModel],
+)
 async def list_users(current_user: UserModel = Depends(get_current_user)):
     users = await Users.find().to_list(1000)
     for user in users:
@@ -41,8 +45,16 @@ async def create_user(user: UserModel):
     return JSONResponse(status_code=status.HTTP_201_CREATED, content=created_user)
 
 
-@router.put("/update_user/{user_id}", response_description="Update a user", response_model=UpdateUserModel)
-async def update_user(user_id: str, user: UpdateUserModel, current_user: UserModel = Depends(get_current_user)):
+@router.put(
+    "/update_user/{user_id}",
+    response_description="Update a user",
+    response_model=UpdateUserModel,
+)
+async def update_user(
+    user_id: str,
+    user: UpdateUserModel,
+    current_user: UserModel = Depends(get_current_user),
+):
     if current_user["role"] is UserRole.admin:
         user = {k: v for k, v in user.dict().items() if v is not None}
 

@@ -24,7 +24,12 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     access_token = create_access_token(data={"sub": user["first_name"]}, expires_delta=access_token_expires)
     await Users.update_one(
         {"first_name": form_data.username},
-        {"$set": {"last_login": datetime.now().strftime("%m/%d/%y %H:%M:%S"), "is_active": "true"}},
+        {
+            "$set": {
+                "last_login": datetime.now().strftime("%m/%d/%y %H:%M:%S"),
+                "is_active": "true",
+            }
+        },
     )
 
     return {"access_token": access_token, "token_type": "bearer"}
