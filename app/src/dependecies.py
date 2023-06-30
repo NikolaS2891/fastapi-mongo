@@ -16,13 +16,13 @@ def verify_password(plain_password: str, hashed_password: str) -> str:
     return pwd_context.verify(plain_password, hashed_password)
 
 
-async def get_user(id: str) -> dict:
-    if (user := await db["users"].find_one({"first_name": id})) is not None:
+async def get_user(username: str) -> dict:
+    if (user := await db["users"].find_one({"username": username})) is not None:
         return user
 
 
-async def authenticate_user(id: str, password: str) -> dict or bool:
-    user = await get_user(id)
+async def authenticate_user(username: str, password: str) -> dict or bool:
+    user = await get_user(username)
     if not user:
         return False
     if not verify_password(password, user["hashed_pass"]):
